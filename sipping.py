@@ -225,15 +225,15 @@ def gen_request(template_vars, options):
                 except Exception, e:
                     sys.stderr.write("ERROR: cannot open file %s. %s\n" % (options.request_template, e))
                     sys.exit(-1)
-        try:
-            req = Request(request)
-        except SipUnpackError, e:
-            sys.stderr.write("ERROR: malformed SIP Request. %s\n" % e)
-            sys.exit(-1)
+            try:
+                req = Request(request)
+            except SipUnpackError, e:
+                sys.stderr.write("ERROR: malformed SIP Request. %s\n" % e)
+                sys.exit(-1)
 
-        if "cseq" not in req.headers:
-            req.headers["cseq"] = "%d %s" % (i, req.method)
-        yield str(req)
+            if "cseq" not in req.headers:
+                req.headers["cseq"] = "%d %s" % (i, req.method)
+            yield str(req)
 
 
 def open_sock(options):
